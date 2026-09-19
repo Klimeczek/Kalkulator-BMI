@@ -1,6 +1,10 @@
 package com.example.kalkulatorbmi;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +13,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private EditText etWeight;
+    private EditText etHeight;
+    private Button btnCalculate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +28,45 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        etWeight = findViewById(R.id.etWeight);
+        etHeight = findViewById(R.id.etHeight);
+
+        btnCalculate.setOnClickListener(v -> calculateBmi());
     }
+
+    public void calculateBmi() {
+        String weightStr = etWeight.getText().toString().trim();
+        String heightStr = etHeight.getText().toString().trim();
+
+        if (weightStr.isEmpty() || heightStr.isEmpty()) {
+            Toast.makeText(this, "Wypełnij oba pola", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double weight;
+        double heightCm;
+
+        try {
+            weight = Double.parseDouble(weightStr);
+            heightCm = Double.parseDouble(heightStr);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Wprowadź poprawne liczby", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (weight <= 0 || heightCm <= 0) {
+            Toast.makeText(this, "Waga i wzrost muszą być większe od zera", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double heightM = heightCm / 100.0;
+
+        double bmi = weight / (heightM * heightM);
+
+        String bmiFormatted = String.format("%.1f", bmi);
+
+    }
+
+
 }
