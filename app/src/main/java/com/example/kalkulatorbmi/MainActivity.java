@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         String heightStr = etHeight.getText().toString().trim();
 
         if (weightStr.isEmpty() || heightStr.isEmpty()) {
-            Toast.makeText(this, "Wypełnij oba pola", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Wypełnij oba pola", Toast.LENGTH_SHORT);
             return;
         }
 
