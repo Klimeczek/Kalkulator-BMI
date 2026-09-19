@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText etWeight;
     private EditText etHeight;
     private Button btnCalculate;
+    private TextView tvResult;
+    private TextView tvCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         etWeight = findViewById(R.id.etWeight);
         etHeight = findViewById(R.id.etHeight);
+        btnCalculate = findViewById(R.id.btnCalculate);
+        tvResult = findViewById(R.id.tvResult);
+        tvCategory = findViewById(R.id.tvCategory);
 
         btnCalculate.setOnClickListener(v -> calculateBmi());
     }
@@ -65,8 +70,17 @@ public class MainActivity extends AppCompatActivity {
         double bmi = weight / (heightM * heightM);
 
         String bmiFormatted = String.format("%.1f", bmi);
+        tvResult.setText("BMI: " + bmiFormatted);
 
+        String category;
+        if (bmi < 18.5) {
+            category = "Niedowaga";
+        } else if (bmi < 25.0) {
+            category = "Norma";
+        } else {
+            category = "Nadwaga";
+        }
+
+        tvCategory.setText(category);
     }
-
-
 }
